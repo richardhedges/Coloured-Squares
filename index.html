@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+<meta charset="utf-8">
+<title>Coloured Squares</title>
+<style type="text/css">
+html, body {
+	width: 100%;
+	height: 100%;
+}
+
+input[type=text] {
+	position: absolute;
+	top: 0;
+	left: 0;
+	font-size: 14px;
+	padding: 5px 3px;
+	position: relative;
+	z-index: 500;
+}
+
+div#squares {
+	width: 100%;
+	height: 100%;
+	position: relative;
+}
+</style>
+</head>
+<body>
+<input id="regenSquares" type="text" placeholder="150" />
+<div id="squares"></div>
+<script type="text/javascript">
+$(document).ready(function() {
+	
+	generateSquares(150);
+
+	$('body').on('keyup', '#regenSquares', function() {
+		generateSquares($(this).val());
+	});
+
+});
+
+function generateSquares(squares) {
+
+	if (squares === '') {
+		squares = 150;
+	}
+
+	$('#squares').html('');
+
+	var largestSquare = 120;
+	var smallestSquare = 50;
+	var colours = [
+		'#53a1cc',
+		'#de5c5a',
+		'#ffe666',
+		'#c2e8ae',
+		'#946fb0'
+	];
+
+	squares = parseInt(squares);
+
+	// noprotect
+	for (var i = 0; i < squares; i++) {
+
+		var colour = colours[Math.floor((Math.random() * (colours.length - 1)) + 1)];
+		var squareSize = Math.floor((Math.random() * largestSquare) + smallestSquare);
+		var topPos = Math.floor((Math.random() * (parseInt($('#squares').height()) - squareSize)) + 0);
+		var leftPos = Math.floor((Math.random() * (parseInt($('#squares').width()) - squareSize)) + 0);
+		var opacity = Math.random() * 1;
+
+		$('#squares').append('<div style="background-color:' + colour + ';width:' + squareSize + 'px;height:' + squareSize + 'px;position:absolute;top:' + topPos + 'px;left:' + leftPos + 'px;opacity:' + opacity + '" />');
+
+	}
+
+}
+</script>
+</body>
+</html>
